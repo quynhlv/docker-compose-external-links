@@ -1,0 +1,28 @@
+version: "3"
+services:
+  web:
+    build: ./docker
+    ports:
+      - "8000:80"
+    volumes:
+      - ./src:/var/www/html/demo
+      - ./docker/apache:/etc/apache2/sites-available
+    external_links:
+      - mysql55:mysql
+    networks:
+      - shared-network
+
+  redis:
+    image: redis:latest
+      
+networks:
+  shared-network:
+    external: true
+
+# docker network ls
+# docker network create <NET WORK NAME>
+# docker network connect <NET WORK NAME> <CONTAINER NAME>
+
+# e.g
+# docker network create shared-network
+# docker network connect shared-network mysql
